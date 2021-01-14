@@ -194,7 +194,29 @@
 <p>Deployment 部署至github的設定，repo要更改為自己的github帳號。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># Extensions</span><br><span class="line">## Plugins: https:&#x2F;&#x2F;hexo.io&#x2F;plugins&#x2F;</span><br><span class="line">## Themes: https:&#x2F;&#x2F;hexo.io&#x2F;themes&#x2F;</span><br><span class="line">theme: landscape</span><br><span class="line"></span><br><span class="line"># Deployment (deploy to github)</span><br><span class="line">## Docs: https:&#x2F;&#x2F;hexo.io&#x2F;docs&#x2F;one-command-deployment</span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: https:&#x2F;&#x2F;github.com&#x2F;username&#x2F;username.github.io.git</span><br><span class="line">  branch: main</span><br></pre></td></tr></table></figure>
 <hr>
-<h5 id="資料夾架構"><a href="#資料夾架構" class="headerlink" title="資料夾架構"></a>資料夾架構</h5><p>blog（根目錄）<br>├─ .deploy_git<br>├─ node_modules<br>├─ public　# 暫存的 push 資料夾（cmd 輸入 hexo g 會產生該資料夾，輸入 hexo cl 則會被刪除）<br>├─ scaffolds<br>├─ source　# 這個資料夾的所有檔案都會 push 到網站上<br>　　├─ _discarded　//“已刪除”的文章會放在這裡（不會 push） (有嗎?)<br>　　├─ _drafts　//“未發布”的文章會放在這裡（不會 push）<br>　　├─ _posts　//“已發布”的文章會放在這裡<br>　　├─ about<br>　　　　└─ index.md　//撰寫部落格的[關於]頁面<br>　　└─ categories<br>├─ themes　//放置佈景主題的資料夾<br>　　└─ landscape　//內建佈景主題 Landscape<br>　　　　├─ layout, scripts…　//有能力者可以修改主題樣板、增加功能等<br>　　　　└─ _config.yml　//修改佈景主題設定<br>└─ _config.yml　//部落格的通用設定，例如：部落格名稱、網址設定等<br>注意事項：</p>
+<h5 id="資料夾架構"><a href="#資料夾架構" class="headerlink" title="資料夾架構"></a>資料夾架構</h5><p>為了理解資料夾目錄的關係，我們一步一步重頭安裝hexo : </p>
+<p>當我們執行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init name</span><br></pre></td></tr></table></figure>
+<p>就會生成資料夾<br><img src="https://i.imgur.com/n05GCXM.png" alt="init 生成資料夾"></p>
+<p>而<code>npm install</code>會修改<code>node_modules</code>資料夾內部，<code>npm install hexo-deployer-git --save</code>會更新<code>package.json</code>、<code>package-lock.json</code>這兩個檔案。</p>
+<p>當我們執行<code>hexo s</code>，會生成<code>db.json</code>並修改<code>package.json</code> : </p>
+<p><img src="https://i.imgur.com/81PFLJH.png" alt="hexo s生成檔案"></p>
+<p>hexo cl 後刪除db.json、public資料夾<br>hexo g 生成public資料夾、db.json<br>hexo d 沒差</p>
+<p>blog（根目錄）</p>
+<p>├─ .deploy_git</p>
+<p>├─ node_modules</p>
+<p>├─ public　# 暫存的 push 資料夾（cmd 輸入 hexo g 會產生該資料夾，輸入 hexo cl 則會被刪除）</p>
+<p>├─ scaffolds</p>
+<p>├─ source　# 這個資料夾的所有檔案都會 push 到網站上</p>
+<p>　　├─ _discarded　//“已刪除”的文章會放在這裡（不會 push） (有嗎?)</p>
+<p>　　├─ _drafts　//“未發布”的文章會放在這裡（不會 push）</p>
+<p>　　├─ _posts　//“已發布”的文章會放在這裡</p>
+<p>├─ themes　//放置佈景主題的資料夾</p>
+<p>　　└─ landscape　//內建佈景主題 Landscape</p>
+<p>　　　　├─ layout, scripts…　//有能力者可以修改主題樣板、增加功能等</p>
+<p>　　　　└─ _config.yml　//修改佈景主題設定</p>
+<p>└─ _config.yml　//部落格的通用設定，例如：部落格名稱、網址設定等</p>
+<p>注意事項：</p>
 <h2 id="source資料夾和public資料夾的關係就相當於「source資料夾-gt-原始碼」和「public資料夾-gt-執行檔」，因此在public資料夾新增、修改資料是沒有用的，因為執行-hexo-cl-指令又會被刪除掉了；所以要新增檔案或修改文章務必在-source資料夾-執行。"><a href="#source資料夾和public資料夾的關係就相當於「source資料夾-gt-原始碼」和「public資料夾-gt-執行檔」，因此在public資料夾新增、修改資料是沒有用的，因為執行-hexo-cl-指令又會被刪除掉了；所以要新增檔案或修改文章務必在-source資料夾-執行。" class="headerlink" title="source資料夾和public資料夾的關係就相當於「source資料夾 -&gt; 原始碼」和「public資料夾 -&gt; 執行檔」，因此在public資料夾新增、修改資料是沒有用的，因為執行 hexo cl 指令又會被刪除掉了；所以要新增檔案或修改文章務必在 source資料夾 執行。"></a>source資料夾和public資料夾的關係就相當於「source資料夾 -&gt; 原始碼」和「public資料夾 -&gt; 執行檔」，因此在public資料夾新增、修改資料是沒有用的，因為執行 hexo cl 指令又會被刪除掉了；所以要新增檔案或修改文章務必在 source資料夾 執行。</h2><h5 id="執行命令"><a href="#執行命令" class="headerlink" title="執行命令"></a>執行命令</h5><p>進入 hexo-admin 後台</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hexo s  # 架設本地端伺服器，也可以輸入 hexo server。可透過http:&#x2F;&#x2F;localhost:4000查看部落格，但此部落格尚未push到網路上。</span><br><span class="line"></span><br><span class="line"># 網站修改完畢後，按下 Ctrl+C 才能接著部署在github上。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>在網址後面加入 /admin就能進入後台 : <a target="_blank" rel="noopener" href="http://localhost:4000/admin">http://localhost:4000/admin</a>。這裡要注意的是，New Post輸入的是文章網址列名稱，進入文章後的才是標題名稱。點選Publish之後就成功在<strong>本地端</strong>上傳，此時還沒有上傳到網路上!</p>
