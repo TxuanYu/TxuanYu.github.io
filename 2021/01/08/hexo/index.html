@@ -123,6 +123,15 @@
 			
 							<ul>
 								<li class="file">
+									<a href="/2021/01/14/hexo-markdown/">
+										hexo-markdown
+									</a>
+								</li>
+								<div class="article-toc" style="display: none;"></div>
+							</ul>
+			
+							<ul>
+								<li class="file">
 									<a href="/2021/01/09/hexo-theme-error/">
 										hexo-theme-error
 									</a>
@@ -201,23 +210,26 @@
 <p>而<code>npm install</code>會修改<code>node_modules</code>資料夾內部，<code>npm install hexo-deployer-git --save</code>會更新<code>package.json</code>、<code>package-lock.json</code>這兩個檔案。</p>
 <p>當我們執行<code>hexo s</code>，會生成<code>db.json</code>並修改<code>package.json</code> : </p>
 <p><img src="https://i.imgur.com/81PFLJH.png" alt="hexo s生成檔案"></p>
-<p>hexo cl 後刪除db.json、public資料夾<br>hexo g 生成public資料夾、db.json<br>hexo d 沒差</p>
+<p><code>hexo cl </code>後刪除<code>db.json</code>、<code>public</code>資料夾；<code>hexo g </code>(根據source檔案)生成<code>public資料夾</code>、<code>db.json</code>；<br><code>hexo d </code>(根據public檔案)修改<code>.deploy_.git</code>。</p>
+<blockquote>
+<p>由上述敘述可知，要修改檔案必須從<code>source</code>裡修改(如: 刪除文章時)，因為<code>public</code>是依據<code>source</code>生成；而<code>deploy_.git</code>是依據<code>public</code>生成。</p>
+</blockquote>
 <p>blog（根目錄）</p>
-<p>├─ .deploy_git</p>
-<p>├─ node_modules</p>
-<p>├─ public　# 暫存的 push 資料夾（cmd 輸入 hexo g 會產生該資料夾，輸入 hexo cl 則會被刪除）</p>
-<p>├─ scaffolds</p>
-<p>├─ source　# 這個資料夾的所有檔案都會 push 到網站上</p>
-<p>　　├─ _discarded　//“已刪除”的文章會放在這裡（不會 push） (有嗎?)</p>
-<p>　　├─ _drafts　//“未發布”的文章會放在這裡（不會 push）</p>
-<p>　　├─ _posts　//“已發布”的文章會放在這裡</p>
-<p>├─ themes　//放置佈景主題的資料夾</p>
-<p>　　└─ landscape　//內建佈景主題 Landscape</p>
-<p>　　　　├─ layout, scripts…　//有能力者可以修改主題樣板、增加功能等</p>
-<p>　　　　└─ _config.yml　//修改佈景主題設定</p>
-<p>└─ _config.yml　//部落格的通用設定，例如：部落格名稱、網址設定等</p>
-<p>注意事項：</p>
-<h2 id="source資料夾和public資料夾的關係就相當於「source資料夾-gt-原始碼」和「public資料夾-gt-執行檔」，因此在public資料夾新增、修改資料是沒有用的，因為執行-hexo-cl-指令又會被刪除掉了；所以要新增檔案或修改文章務必在-source資料夾-執行。"><a href="#source資料夾和public資料夾的關係就相當於「source資料夾-gt-原始碼」和「public資料夾-gt-執行檔」，因此在public資料夾新增、修改資料是沒有用的，因為執行-hexo-cl-指令又會被刪除掉了；所以要新增檔案或修改文章務必在-source資料夾-執行。" class="headerlink" title="source資料夾和public資料夾的關係就相當於「source資料夾 -&gt; 原始碼」和「public資料夾 -&gt; 執行檔」，因此在public資料夾新增、修改資料是沒有用的，因為執行 hexo cl 指令又會被刪除掉了；所以要新增檔案或修改文章務必在 source資料夾 執行。"></a>source資料夾和public資料夾的關係就相當於「source資料夾 -&gt; 原始碼」和「public資料夾 -&gt; 執行檔」，因此在public資料夾新增、修改資料是沒有用的，因為執行 hexo cl 指令又會被刪除掉了；所以要新增檔案或修改文章務必在 source資料夾 執行。</h2><h5 id="執行命令"><a href="#執行命令" class="headerlink" title="執行命令"></a>執行命令</h5><p>進入 hexo-admin 後台</p>
+<p>├─ .deploy_git # 部署至github的相關檔案</p>
+<p>├─ node_modules # hexo的相關檔案</p>
+<p>├─ public　# 暫存資料夾(根據source檔案生成)</p>
+<p>├─ scaffolds # 初始化檔案</p>
+<p>　　├─ _draft</p>
+<p>　　├─ _page</p>
+<p>　　├─ _post</p>
+<p>├─ source　# push 到網站上的檔案</p>
+<p>　　├─ _drafts　# 尚未發布的文章</p>
+<p>　　├─ _posts　# 已發佈的文章(若需要刪除文章，直接從這邊刪除即可)</p>
+<p>├─ themes　# 主題資料夾</p>
+<p>　　└─ xxxx　# 自己下載的主題名稱</p>
+<p>└─ _config.yml　# 部落格設定</p>
+<hr>
+<h5 id="執行命令"><a href="#執行命令" class="headerlink" title="執行命令"></a>執行命令</h5><p>進入 hexo-admin 後台</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hexo s  # 架設本地端伺服器，也可以輸入 hexo server。可透過http:&#x2F;&#x2F;localhost:4000查看部落格，但此部落格尚未push到網路上。</span><br><span class="line"></span><br><span class="line"># 網站修改完畢後，按下 Ctrl+C 才能接著部署在github上。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>在網址後面加入 /admin就能進入後台 : <a target="_blank" rel="noopener" href="http://localhost:4000/admin">http://localhost:4000/admin</a>。這裡要注意的是，New Post輸入的是文章網址列名稱，進入文章後的才是標題名稱。點選Publish之後就成功在<strong>本地端</strong>上傳，此時還沒有上傳到網路上!</p>
 <p>在路徑為部落格( Hexo 資較夾根目錄)下，以 cmd 輸入 : </p>
@@ -245,6 +257,7 @@
 <p><a target="_blank" rel="noopener" href="https://ed521.github.io/2019/08/hexo-admin/">[教學] 我的第一篇 Hexo 文章：使用 hexo-admin 後台管理工具</a></p>
 <p><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/Node.js">Node.js 維基百科</a></p>
 <p><a target="_blank" rel="noopener" href="https://nodejs.org/en/knowledge/getting-started/npm/what-is-npm/">What is npm?</a></p>
+<p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000018237272">简单认识Hexo的目录结构</a></p>
 
 </div>
 
